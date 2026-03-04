@@ -1,6 +1,15 @@
 <?php
     include "partials/header.php";
     include "partials/nav.php";
+    include "classes/Database.php";
+
+    $conn = new Database();
+
+    if($conn) {
+        echo "connected";
+    } else {
+        echo "error";
+    }
 ?>  
 
     <!-- Header Section -->
