@@ -3,6 +3,8 @@
     include "partials/nav.php";
     include "classes/Database.php";
 
+    echo "radi sve";
+
     $conn = new Database();
 
     if($conn) {
