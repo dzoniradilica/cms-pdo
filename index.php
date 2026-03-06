@@ -1,17 +1,10 @@
 <?php
-    include "partials/header.php";
+    require_once "helpers.php";
+    include basic_url('partials/header.php');
     include "partials/nav.php";
     include "classes/Database.php";
 
-    echo "radi sve";
-
     $conn = new Database();
-
-    if($conn) {
-        echo "connected";
-    } else {
-        echo "error";
-    }
 ?>  
 
     <!-- Header Section -->
