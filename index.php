@@ -1,8 +1,10 @@
 <?php
     require_once "helpers.php";
-    include basic_url('partials/header.php');
-    include "partials/nav.php";
-    include "classes/Database.php";
+    require_once 'partials/header.php';
+    include base_path("partials/nav.php");
+    include base_path("classes/Database.php");
+
+    echo base_path('partials/header.php');
 
     $conn = new Database();
 ?>  
