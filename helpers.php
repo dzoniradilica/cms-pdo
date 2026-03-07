@@ -6,6 +6,8 @@
         $host = $_SERVER['HTTP_HOST'];
         $baseUrl = $protocol . $host . '/' . PROJECT_ROOT;
 
+        echo 'radi';
+
         return $baseUrl . '/' . ltrim($path, '/');
     }
 
