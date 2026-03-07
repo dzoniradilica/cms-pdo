@@ -4,6 +4,8 @@
     include base_path("partials/nav.php");
     include base_path("classes/Database.php");
 
+    echo 'radi';
+
     echo base_path('partials/header.php');
 
     $conn = new Database();
