@@ -3,22 +3,19 @@
     require_once "partials/header.php";
     include base_path("partials/nav.php");
 
-    $db = new Database();
-    $conn = $db->getConnection();
-
     if(isPostRequest()) {
+        $user = new User();
         $username = $_POST['username'];
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        if($password === $_POST['confirm-password']) {
-            $user = new User($conn);
-
-            if($user->create($username, $email, $password)) {
-                redirect('admin.php');
-            }
-        } else {
+        if($password !== $_POST['confirm-password']) {
             echo "Passwords don't match!";
+        } elseif($user->exists($username, $email)) {
+            echo "Username or Email already taken";
+        } else {
+            $user->create($username, $email, $password);
+            redirect('admin.php');
         }
     }
 ?>

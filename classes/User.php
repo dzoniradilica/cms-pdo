@@ -3,9 +3,10 @@
         private $conn;
         private $table = 'users';
 
-        public function __construct($db)
+        public function __construct()
         {
-            $this->conn = $db;
+            $db = new Database();
+            $this->conn = $db->getConnection();
         }
 
         public function create($username, $email, $password) {
@@ -18,6 +19,30 @@
             $stmt->bindParam(':hashed_password', $hashed_password);
 
             if($stmt->execute()) {
+                return true;
+            }
+
+            return false;
+        }
+
+        public function exists($username, $email) {
+            $query = "SELECT id FROM " . $this->table . " WHERE username = :username OR email = :email";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([
+                ':username' => $username,
+                ':email' => $email
+            ]);
+
+            return $stmt->rowCount() > 0;
+        }
+
+        public function login($email, $password) {
+            $query = "SELECT * FROM " . $this->table . " WHERE email = :email LIMIT 1";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([':email' => $email]);
+            $foundUser = $stmt->fetch(PDO::FETCH_OBJ);
+
+            if(password_verify($password, $foundUser->password)) {
                 return true;
             }
 
