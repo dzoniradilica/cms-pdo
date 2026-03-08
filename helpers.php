@@ -22,4 +22,9 @@
 
         return false;
     }
+
+    function redirect($location) {
+        header("Location: $location");
+        exit;
+    }
 ?>

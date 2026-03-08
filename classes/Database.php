@@ -12,7 +12,7 @@
             $this->conn = null;
 
             try {
-                $this->conn = new PDO("mysqli:host={$this->host};dbname={$this->db_name}", $this->db_user, $this->db_password);
+                $this->conn = new PDO("mysql:host={$this->host};dbname={$this->db_name}", $this->db_user, $this->db_password);
                 $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (Exception $e) {
                 echo "Error: " . $e->getMessage();

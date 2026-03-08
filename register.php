@@ -3,10 +3,23 @@
     require_once "partials/header.php";
     include base_path("partials/nav.php");
 
-    if(isPostRequest()) {
-        $name = $_GET['name'];
+    $db = new Database();
+    $conn = $db->getConnection();
 
-        echo $name;
+    if(isPostRequest()) {
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        if($password === $_POST['confirm-password']) {
+            $user = new User($conn);
+
+            if($user->create($username, $email, $password)) {
+                redirect('admin.php');
+            }
+        } else {
+            echo "Passwords don't match!";
+        }
     }
 ?>
 
@@ -17,8 +30,9 @@
             <div class="col-md-6">
                 <form action="" method="post">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Full Name *</label>
+                        <label for="username" class="form-label">Full Name *</label>
                         <input
+                            name="username"
                             type="text"
                             class="form-control"
                             id="name"
@@ -28,6 +42,7 @@
                     <div class="mb-3">
                         <label for="email" class="form-label">Email address *</label>
                         <input
+                            name="email"
                             type="email"
                             class="form-control"
                             id="email"
@@ -37,6 +52,7 @@
                     <div class="mb-3">
                         <label for="password" class="form-label">Password *</label>
                         <input
+                            name="password"
                             type="password"
                             class="form-control"
                             id="password"
@@ -46,6 +62,7 @@
                     <div class="mb-3">
                         <label for="confirm-password" class="form-label">Confirm Password *</label>
                         <input
+                            name="confirm-password"
                             type="password"
                             class="form-control"
                             id="confirm-password"
