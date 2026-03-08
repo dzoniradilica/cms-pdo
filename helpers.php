@@ -6,8 +6,6 @@
         $host = $_SERVER['HTTP_HOST'];
         $baseUrl = $protocol . $host . '/' . PROJECT_ROOT;
 
-        echo 'radi';
-
         return $baseUrl . '/' . ltrim($path, '/');
     }
 
@@ -15,5 +13,13 @@
         $rootPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . PROJECT_ROOT;
 
         return $rootPath . DIRECTORY_SEPARATOR . ltrim($path, DIRECTORY_SEPARATOR);
+    }
+
+    function isPostRequest() {
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+           return true;
+        }
+
+        return false;
     }
 ?>
