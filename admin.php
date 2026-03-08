@@ -1,6 +1,10 @@
 <?php
     include "partials/admin/header.php";
     include "partials/admin/nav.php";
+
+    if(!$_SESSION['logged_in']) {
+        redirect('index.php');
+    }
 ?>
  
     <!-- Main Content -->

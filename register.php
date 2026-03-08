@@ -15,7 +15,7 @@
             echo "Username or Email already taken";
         } else {
             $user->create($username, $email, $password);
-            redirect('admin.php');
+            redirect('login.php');
         }
     }
 ?>

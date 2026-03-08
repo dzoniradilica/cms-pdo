@@ -40,9 +40,13 @@
             $query = "SELECT * FROM " . $this->table . " WHERE email = :email LIMIT 1";
             $stmt = $this->conn->prepare($query);
             $stmt->execute([':email' => $email]);
-            $foundUser = $stmt->fetch(PDO::FETCH_OBJ);
+            $user = $stmt->fetch(PDO::FETCH_OBJ);
 
-            if(password_verify($password, $foundUser->password)) {
+            if($user && password_verify($password, $user->password)) {
+                $_SESSION['logged_in'] = true;
+                $_SESSION['user_id'] = $user->id;
+                $_SESSION['username'] = $user->username;
+                $_SESSION['email'] = $user->email;
                 return true;
             }
 
