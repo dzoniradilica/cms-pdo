@@ -3,7 +3,7 @@
     include base_path("partials/admin/header.php");
     include base_path("partials/admin/nav.php");
 
-    var_dump($_SESSION);
+    
 
     if(isPostRequest()) {
         $title = $_POST['title'];
@@ -13,13 +13,11 @@
 
         $article = new Article();
 
-        
-
-        // if($article->create($title, $content, intval($user_id), $date)) {
-        //     redirect('admin.php');
-        // } else {
-        //     echo "Something went wrong";
-        // }
+        if($article->create($title, $content, intval($user_id), $date)) {
+            redirect('admin.php');
+        } else {
+            echo "Something went wrong";
+        }
     }
 ?>
 
