@@ -19,7 +19,7 @@
                 id="navbarNav"
             >
                 <ul class="navbar-nav ms-auto">
-                    <?php if($_SESSION['logged_in']): ?>
+                    <?php if(isset($_SESSION['logged_in'])): ?>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                         </li>
@@ -33,6 +33,15 @@
                             <a class="nav-link" href="contact.php">Contact</a>
                         </li>
                     <?php else: ?>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.php">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.php">Contact</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="login.php">Login</a>
                         </li>

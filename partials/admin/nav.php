@@ -1,10 +1,15 @@
 <?php
+    require_once dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "init.php";
 
-   var_dump(dirname(__DIR__));
+    if(isPostRequest()) {
+        $user = new User();
+
+        $user->logout();
+    }
 ?>
 
 <!-- Navigation Bar -->
-     <?php if($_SESSION['logged_in']): ?>
+     <?php if(isset($_SESSION['logged_in'])): ?>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="index.php">CMS PDO System - Admin</a>
@@ -36,9 +41,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="profile.php">Profile</a>
                         </li>
-                        <form action="" method="post">
-                            <button class="nav-item">
-                                <a class="nav-link" href="login.php">Logout</a>
+                        <form action="" method="post" type="submit">
+                            <button style="border: 0; background: 0; padding: 0; ">
+                                <li class="nav-item">
+                                    <a class="nav-link" style="cursor: pointer;">Logout</a>
+                                </li>
                             </button>
                         </form>
                     </ul>

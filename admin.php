@@ -1,7 +1,7 @@
 <?php
     require_once "init.php";
-    include "partials/admin/header.php";
-    include "partials/admin/nav.php";
+    include base_path("partials/admin/header.php");
+    include base_path("partials/admin/nav.php");
 
     if(!$_SESSION['logged_in']) {
         redirect('index.php');

@@ -54,7 +54,11 @@
         }
 
         public function logout() {
-            $_SESSION['logged_in'] = false;
+            $_SESSION['logged_in'] = [];
+            $_SESSION['user_id'] = [];
+            $_SESSION['username'] = [];
+            $_SESSION['email'] = [];
+            session_destroy();
         }
     }
 ?>
