@@ -1,4 +1,5 @@
 <?php
+    require_once "init.php";
     include "partials/admin/header.php";
     include "partials/admin/nav.php";
 

@@ -1,4 +1,9 @@
-    <!-- Navigation Bar -->
+<?php
+
+   var_dump(dirname(__DIR__));
+?>
+
+<!-- Navigation Bar -->
      <?php if($_SESSION['logged_in']): ?>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
@@ -29,8 +34,13 @@
                             <a class="nav-link" href="index.php">View Site</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="login.php">Logout</a>
+                            <a class="nav-link" href="profile.php">Profile</a>
                         </li>
+                        <form action="" method="post">
+                            <button class="nav-item">
+                                <a class="nav-link" href="login.php">Logout</a>
+                            </button>
+                        </form>
                     </ul>
                 </div>
             </div>

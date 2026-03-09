@@ -52,5 +52,9 @@
 
             return false;
         }
+
+        public function logout() {
+            $_SESSION['logged_in'] = false;
+        }
     }
 ?>
