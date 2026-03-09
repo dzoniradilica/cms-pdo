@@ -3,6 +3,8 @@
     include base_path("partials/admin/header.php");
     include base_path("partials/admin/nav.php");
 
+    var_dump($_SESSION);
+
     if(!$_SESSION['logged_in']) {
         redirect('index.php');
     }
