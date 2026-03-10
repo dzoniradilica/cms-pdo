@@ -27,4 +27,8 @@
         header("Location: $location");
         exit;
     }
+
+    function transform_date($date) {
+        return date_format(date_create($date), "Y/m/d");
+    }
 ?>

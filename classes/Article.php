@@ -24,5 +24,22 @@
 
             return false;
         }
+
+        public function getAllWithAutors($id)
+        {
+            $query = 
+            "SELECT articles.*, users.username 
+            FROM " . $this->table . 
+            " JOIN users ON articles.user_id = :id
+            ORDER BY articles.created_at DESC";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+            if($stmt->execute()) {
+                return $stmt->fetchAll(PDO::FETCH_OBJ);
+            }
+
+            return false;
+        }
     }
 ?>

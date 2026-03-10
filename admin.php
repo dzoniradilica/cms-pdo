@@ -3,11 +3,14 @@
     include base_path("partials/admin/header.php");
     include base_path("partials/admin/nav.php");
 
-    var_dump($_SESSION);
-
     if(!$_SESSION['logged_in']) {
         redirect('index.php');
     }
+
+    $article = new Article();
+    $articles = $article->getAllWithAutors(intval($_SESSION['user_id']));
+
+    var_dump($articles)
 ?>
  
     <!-- Main Content -->
@@ -28,34 +31,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Example Article Row -->
-                    <tr>
-                        <td>1</td>
-                        <td>Article Title 1</td>
-                        <td>Edwin Diaz</td>
-                        <td>January 1, 2045</td>
-                        <td>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus feugiat elit vitae enim lacinia semper...
-                        </td>
-                        <td>
-                            <a href="edit-article.html?id=1" class="btn btn-sm btn-primary me-1">Edit</a>
-                            <button class="btn btn-sm btn-danger" onclick="confirmDelete(1)">Delete</button>
-                        </td>
-                    </tr>
-                    <!-- Additional Article Rows -->
-                    <tr>
-                        <td>2</td>
-                        <td>Article Title 2</td>
-                        <td>Jose Diaz</td>
-                        <td>February 15, 2045</td>
-                        <td>
-                            Quisque fermentum, nisl a pulvinar tincidunt, nunc purus laoreet massa, nec tempor arcu urna vel nisi...
-                        </td>
-                        <td>
-                            <a href="edit-article.html?id=2" class="btn btn-sm btn-primary me-1">Edit</a>
-                            <button class="btn btn-sm btn-danger" onclick="confirmDelete(2)">Delete</button>
-                        </td>
-                    </tr>
+                    <?php foreach($articles as $articleItem): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($articleItem->id); ?></td>
+                            <td><?php echo htmlspecialchars($articleItem->title); ?></td>
+                            <td><?php echo htmlspecialchars($articleItem->title); ?></td>
+                            <td><?php echo htmlspecialchars(transform_date($articleItem->created_at)); ?></td>
+                            <td>
+                                <?php echo htmlspecialchars($articleItem->content); ?>
+                            </td>
+                            <td>
+                                <a href="edit-article.php?id=<?php echo htmlspecialchars($articleItem->id); ?>" class="btn btn-sm btn-primary me-1">Edit</a>
+                                <button class="btn btn-sm btn-danger" onclick="confirmDelete(2)">Delete</button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                     <!-- You can add more articles here -->
                 </tbody>
             </table>
