@@ -6,6 +6,22 @@
     
 
     if(isPostRequest()) {
+        $upload_dir = '/uploads';
+
+        if(!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+
+        foreach($_FILES['image']['name'] as $key => $file_name) {
+            $file_temp = $_FILES['image']['tmp_name'][$key];
+            $file_size = $_FILES['image']['size'][$key];
+            $file_error = $_FILES['image']['error'][$key];
+            $file_type = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+            $target_file = $upload_dir . basename($file_name);
+
+            var_dump($file_name);
+        }
+
         $title = $_POST['title'];
         $content = $_POST['content'];
         $user_id = $_SESSION['user_id'];
@@ -13,18 +29,18 @@
 
         $article = new Article();
 
-        if($article->create($title, $content, intval($user_id), $date)) {
-            redirect('admin.php');
-        } else {
-            echo "Something went wrong";
-        }
+        // if($article->create($title, $content, intval($user_id), $date)) {
+        //     redirect('admin.php');
+        // } else {
+        //     echo "Something went wrong";
+        // }
     }
 ?>
 
     <!-- Main Content -->
     <main class="container my-5">
         <h2>Create New Article</h2>
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="title" class="form-label">Article Title *</label>
                 <input type="text" name="title" class="form-control" id="title" placeholder="Enter article title" required>
@@ -38,8 +54,8 @@
                 <textarea class="form-control" name="content" id="content" rows="10" placeholder="Enter article content" required></textarea>
             </div>
             <div class="mb-3">
-                <label for="image" class="form-label">Featured Image URL</label>
-                <input type="url" name="image" class="form-control" id="image" placeholder="Enter image URL">
+                <label for="image" class="form-label">Select Featured Image</label>
+                <input type="file" name="image[]" class="form-control" id="image" placeholder="Enter image URL">
             </div>
             <button type="submit" class="btn btn-success">Publish Article</button>
             <a href="admin.php" class="btn btn-secondary ms-2">Cancel</a>
