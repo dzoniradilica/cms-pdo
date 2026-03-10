@@ -60,5 +60,18 @@
             $_SESSION['email'] = [];
             session_destroy();
         }
+
+        public function get($id)
+        {
+            $query = "SELECT * FROM " . $this->table . " WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+            if($stmt->execute()) {
+                return $stmt->fetch(PDO::FETCH_OBJ);
+            }
+
+            return false;
+        }
     }
 ?>

@@ -31,4 +31,12 @@
     function transform_date($date) {
         return date_format(date_create($date), "Y/m/d");
     }
+
+    function transform_content($str) {
+        if(strlen($str) > 100) {
+            return substr($str, 0, 99) . "...";
+        }
+
+        return $str;
+    }
 ?>
