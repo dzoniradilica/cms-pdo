@@ -7,6 +7,10 @@
         redirect('index.php');
     }
 
+    // $str = "alalla.png";
+
+    // var_dump(substr($str, strpos($str, '.')));
+
     $user = new User();
     $foundUser = $user->get(intval($_SESSION['user_id']));
     $article = new Article();

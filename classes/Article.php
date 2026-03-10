@@ -9,14 +9,15 @@
             $this->conn = $db->getConnection();
         }
 
-        public function create($title, $content, $user_id, $created_at, $image = "") 
+        public function create($title, $content, $user_id, $created_at, $image = NULL) 
         {
-            $query = "INSERT INTO " . $this->table . " (title, content, user_id, created_at) VALUES (:title, :content, :user_id, :created_at)";
+            $query = "INSERT INTO " . $this->table . " (title, content, user_id, created_at, image) VALUES (:title, :content, :user_id, :created_at, :image)";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':title', $title);
             $stmt->bindParam(':content', $content);
             $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             $stmt->bindParam(':created_at', $created_at);
+            $stmt->bindParam(':image', $image);
 
             if($stmt->execute()) {
                 return true;
