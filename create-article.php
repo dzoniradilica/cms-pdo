@@ -3,6 +3,10 @@
     include base_path("partials/admin/header.php");
     include base_path("partials/admin/nav.php");
 
+    if(!$_SESSION['logged_in']) {
+        redirect('index.php');
+    }
+
     if(isPostRequest()) {
         $title = $_POST['title'];
         $content = $_POST['content'];
@@ -14,7 +18,7 @@
         $article = new Article();
 
         if(isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $upload_dir = '/uploads';
+            $upload_dir = 'uploads/';
             $img_name = $_FILES['image']['name'];
             $img_tmp = $_FILES['image']['tmp_name'];
             $img_size = $_FILES['image']['size'];
@@ -30,7 +34,7 @@
             if(empty($img_err)) {
                 $clean_name = strstr($img_name, '.', true);
                 $image = $clean_name . "_" . uniqid() . "." . $img_type;
-                $target_file = $upload_dir . $unique_name;
+                $target_file = $upload_dir . $image;
 
                 if(move_uploaded_file($img_tmp, $target_file)) {
                     $article->create($title, $content, $user_id, $date, $image);

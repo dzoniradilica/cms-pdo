@@ -32,7 +32,7 @@
             return false;
         }
 
-        public function getAllWithAutors($id)
+        public function getAllWithAuthor($id)
         {
             $query = 
             "SELECT articles.*, users.username 
@@ -45,6 +45,23 @@
 
             if($stmt->execute()) {
                 return $stmt->fetchAll(PDO::FETCH_OBJ);
+            }
+
+            return false;
+        }
+
+        public function getWithAuthor($id, $user_id) {
+            $query = 
+            "SELECT articles.*, users.username FROM "
+            . $this->table .
+            " JOIN users ON articles.user_id = :user_id
+            WHERE articles.id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+
+            if($stmt->execute()) {
+                return $stmt->fetch(PDO::FETCH_OBJ);
             }
 
             return false;

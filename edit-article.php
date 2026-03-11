@@ -2,6 +2,17 @@
     require_once "init.php";
     include base_path("partials/admin/header.php");
     include base_path("partials/admin/nav.php");
+
+    if(!$_SESSION['logged_in']) {
+        redirect('index.php');
+    }
+
+    if(isset($_GET['id'])) {
+        $article = new Article();
+        $single_article = $article->getWithAuthor(intval($_GET['id']), intval($_SESSION['user_id']));
+
+        var_dump($single_article);
+    }
 ?>
 
     <!-- Main Content -->
@@ -10,7 +21,7 @@
         <form action="admin.html" method="post">
             <div class="mb-3">
                 <label for="title" class="form-label">Article Title *</label>
-                <input type="text" class="form-control" id="title" value="Current Article Title" required>
+                <input type="text" class="form-control" id="title" value="<?php echo htmlspecialchars($single_article->title); ?>" required>
             </div>
             <div class="mb-3">
                 <label for="author" class="form-label">Author *</label>
