@@ -17,39 +17,41 @@
 
         $article = new Article();
 
-        if(isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $upload_dir = 'uploads/';
-            $img_name = $_FILES['image']['name'];
-            $img_tmp = $_FILES['image']['tmp_name'];
-            $img_size = $_FILES['image']['size'];
-            $img_type = strtolower(pathinfo($img_name, PATHINFO_EXTENSION));
-            $allowed_types = ['jpg', 'png', 'gif'];
+        upload_image($article, $title, $content, $user_id, $date, $image, $img_err);
 
-            if($img_size > 4 * 1024 * 1024) {
-                $img_err = "Image is to big!";
-            } elseif(!in_array($img_type, $allowed_types)) {
-                $img_err = 'Your image type is not allowed!';
-            }
+        // if(isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        //     $upload_dir = 'uploads/';
+        //     $img_name = $_FILES['image']['name'];
+        //     $img_tmp = $_FILES['image']['tmp_name'];
+        //     $img_size = $_FILES['image']['size'];
+        //     $img_type = strtolower(pathinfo($img_name, PATHINFO_EXTENSION));
+        //     $allowed_types = ['jpg', 'png', 'gif'];
 
-            if(empty($img_err)) {
-                $clean_name = strstr($img_name, '.', true);
-                $image = $clean_name . "_" . uniqid() . "." . $img_type;
-                $target_file = $upload_dir . $image;
+        //     if($img_size > 4 * 1024 * 1024) {
+        //         $img_err = "Image is to big!";
+        //     } elseif(!in_array($img_type, $allowed_types)) {
+        //         $img_err = 'Your image type is not allowed!';
+        //     }
 
-                if(move_uploaded_file($img_tmp, $target_file)) {
-                    $article->create($title, $content, $user_id, $date, $image);
-                    redirect('admin.php');
-                } else {
-                    echo "Something went wrong";
-                }
-            } else {
-                $article->create($title, $content, $user_id, $date);
-                redirect('admin.php');
-            }
-        } else {
-            $article->create($title, $content, $user_id, $date);
-            redirect('admin.php');
-        }
+        //     if(empty($img_err)) {
+        //         $clean_name = strstr($img_name, '.', true);
+        //         $image = $clean_name . "_" . uniqid() . "." . $img_type;
+        //         $target_file = $upload_dir . $image;
+
+        //         if(move_uploaded_file($img_tmp, $target_file)) {
+        //             $article->create($title, $content, $user_id, $date, $image);
+        //             redirect('admin.php');
+        //         } else {
+        //             echo "Something went wrong";
+        //         }
+        //     } else {
+        //         $article->create($title, $content, $user_id, $date);
+        //         redirect('admin.php');
+        //     }
+        // } else {
+        //     $article->create($title, $content, $user_id, $date);
+        //     redirect('admin.php');
+        // }
     }
 ?>
 

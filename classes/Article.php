@@ -9,7 +9,7 @@
             $this->conn = $db->getConnection();
         }
 
-        public function create($title, $content, $user_id, $created_at, $image = null) 
+        public function create($title = '', $content = '', $user_id = '', $created_at = '', $image = null) 
         {
             $query = "INSERT INTO " . $this->table . " (title, content, user_id, created_at, image) VALUES (:title, :content, :user_id, :created_at, :image)";
             $stmt = $this->conn->prepare($query);
@@ -62,6 +62,21 @@
 
             if($stmt->execute()) {
                 return $stmt->fetch(PDO::FETCH_OBJ);
+            }
+
+            return false;
+        }
+
+        public function update($title, $content, $image, $created_at) {
+            $query = "UPDATE " .$this->table . " SET title = :title, content = :content, image = :image, created_at = :created_at";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(':title', $title);
+            $stmt->bindValue(':content', $content);
+            $stmt->bindValue(':image', $image);
+            $stmt->bindValue(':created_at', $created_at);
+
+            if($stmt->execute()) {
+                return true;
             }
 
             return false;
