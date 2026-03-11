@@ -8,52 +8,43 @@
         $content = $_POST['content'];
         $user_id = $_SESSION['user_id'];
         $date = $_POST['date'];
+        $image = null;
+        $img_err = '';
 
         $article = new Article();
 
-        if(isset($_FILES['image'])) {
-            if($_FILES['image']['error'] === 0) {
-                $upload_dir = "uploads/";
-                $file_name = basename($_FILES['image']['name']);
-                $target_file = $upload_dir . $file_name;
+        if(isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            $upload_dir = '/uploads';
+            $img_name = $_FILES['image']['name'];
+            $img_tmp = $_FILES['image']['tmp_name'];
+            $img_size = $_FILES['image']['size'];
+            $img_type = strtolower(pathinfo($img_name, PATHINFO_EXTENSION));
+            $allowed_types = ['jpg', 'png', 'gif'];
 
-                $file_size = $_FILES['image']['size'];
-                $file_type = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+            if($img_size > 4 * 1024 * 1024) {
+                $img_err = "Image is to big!";
+            } elseif(!in_array($img_type, $allowed_types)) {
+                $img_err = 'Your image type is not allowed!';
+            }
 
-                $allowed_types = ['jpg', 'gif', 'png', 'jpeg'];
+            if(empty($img_err)) {
+                $clean_name = strstr($img_name, '.', true);
+                $image = $clean_name . "_" . uniqid() . "." . $img_type;
+                $target_file = $upload_dir . $unique_name;
 
-                if($file_size > 4 * 1024 * 1024) {
-                    $fileErr = "Your file is too large: {$file_size}";
-                    return;
-                } elseif(!in_array($file_type, $allowed_types)) {
-                    $fileErr = "Your file type is not allowed";
-                    return;
+                if(move_uploaded_file($img_tmp, $target_file)) {
+                    $article->create($title, $content, $user_id, $date, $image);
+                    redirect('admin.php');
                 } else {
-                    if(!move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                        $fileErr = "Sorry, there was an error";
-                    } else {
-                        $image_id = uniqid();
-                        $image_name = strstr($file_name, '.', true) . "/" . $image_id . "." . $file_type;
-                        if($article->create($title, $content, intval($user_id), $date, $image_name)) {
-                            redirect('admin.php');
-                        } else {
-                            echo "Something went wrong";
-                        }
-                    }
+                    echo "Something went wrong";
                 }
-
             } else {
-                    switch($_FILES['image']['error']) {
-                        case UPLOAD_ERR_INI_SIZE: 
-                            $fileErr = "The upload files exceeds the maximum size allowed by the server";
-                    }
-                }
-        }
-
-        if($article->create($title, $content, intval($user_id), $date)) {
-            redirect('admin.php');
+                $article->create($title, $content, $user_id, $date);
+                redirect('admin.php');
+            }
         } else {
-            echo "Something went wrong";
+            $article->create($title, $content, $user_id, $date);
+            redirect('admin.php');
         }
     }
 ?>
