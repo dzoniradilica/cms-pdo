@@ -6,8 +6,6 @@
 
     $article = new Article();
     $articles = $article->getAll();
-
-    var_dump($articles);
 ?>  
 
     <!-- Header Section -->
@@ -27,7 +25,7 @@
             <div class="row mb-4">
                 <div class="col-md-4">
                     <img
-                        src=<?php echo isset($articleItem->image) ? 'uploads/' . htmlspecialchars($articleItem->image) : "https://placehold.co/600x400"; ?>
+                        src="<?php echo $articleItem->image ? 'uploads/' . htmlspecialchars($articleItem->image) : "https://placehold.co/600x400"; ?>"
                         class="img-fluid"
                         alt="Blog Post Image"
                     >
