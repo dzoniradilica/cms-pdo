@@ -7,11 +7,15 @@
         redirect('index.php');
     }
 
+    $article = new Article();
+    $single_article = $article->getWithAuthor(intval($_GET['id']), intval($_SESSION['user_id']));
+    $image_name = $single_article->image;
+
+    if($single_article->user_id !== $_SESSION['user_id']) {
+        redirect('admin.php');
+    }
+
     if(isset($_GET['id'])) {
-        $article = new Article();
-        $single_article = $article->getWithAuthor(intval($_GET['id']), intval($_SESSION['user_id']));
-        $image_name = $single_article->image;
-        
         if(isPostRequest()) {
             $article_id = $single_article->id;
             $title = $_POST['title'];

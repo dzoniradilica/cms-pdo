@@ -8,6 +8,7 @@
     if(isPostRequest() && isset($_POST['article_id'])) {
         $article = new Article();
         $single_article = $article->get(intval($_POST['article_id']));
+        $upload_dir = 'uploads/';
 
         if(!empty($single_article->image) && file_exists($upload_dir . $single_article->image)) {
             unlink($upload_dir . $single_article->image);

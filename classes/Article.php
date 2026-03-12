@@ -32,6 +32,17 @@
             return false;
         }
 
+        public function getAll() {
+            $query = "SELECT * FROM " . $this->table;
+            $stmt = $this->conn->prepare($query);
+
+            if($stmt->execute()) {
+                return $stmt->fetchAll(PDO::FETCH_OBJ);
+            }
+
+            return false;
+        }
+
         public function getAllWithAuthor($id)
         {
             $query = 
