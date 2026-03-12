@@ -13,6 +13,7 @@
         $image_name = $single_article->image;
         
         if(isPostRequest()) {
+            $article_id = $single_article->id;
             $title = $_POST['title'];
             $content = $_POST['content'];
             $date = $_POST['date'];
@@ -38,7 +39,7 @@
                 }
             }
 
-            if($article->update($title, $content, $image_name, $date)) {
+            if($article->update(intval($article_id), $title, $content, $image_name, $date)) {
                 redirect('admin.php');
             }
         }
@@ -51,7 +52,7 @@
         <form action="" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="title" class="form-label">Article Title *</label>
-                <input type="text" class="form-control" id="title" value="<?php echo htmlspecialchars($single_article->title); ?>" required>
+                <input type="text" name="title" class="form-control" id="title" value="<?php echo htmlspecialchars($single_article->title); ?>" required>
             </div>
             <div class="mb-3">
                 <label for="author" class="form-label">Author</label>
@@ -59,11 +60,11 @@
             </div>
             <div class="mb-3">
                 <label for="date" class="form-label">Published Date *</label>
-                <input type="date" class="form-control" id="date" value="<?php echo htmlspecialchars(transform_date($single_article->created_at)); ?>" required>
+                <input type="date" name="date" class="form-control" id="date" value="<?php echo htmlspecialchars(transform_date($single_article->created_at)); ?>" required>
             </div>
             <div class="mb-3">
                 <label for="content" class="form-label">Content *</label>
-                <textarea class="form-control" id="content" rows="10" required><?php echo htmlspecialchars($single_article->content); ?></textarea>
+                <textarea class="form-control" name="content" id="content" rows="10" required><?php echo htmlspecialchars($single_article->content); ?></textarea>
             </div>
             <div class="mb-3" 
                 style="

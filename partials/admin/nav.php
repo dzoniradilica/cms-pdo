@@ -1,4 +1,3 @@
-
 <!-- Navigation Bar -->
      <?php if(isset($_SESSION['logged_in'])): ?>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -21,16 +20,16 @@
                 >
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="admin.php">Dashboard</a>
+                            <a class="nav-link <?php echo link_checker('admin.php') ? 'active' : '' ?>" aria-current="<?php echo link_checker('admin.php') ? 'page' : '' ?>" href="admin.php">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="create-article.php">Create Article</a>
+                            <a class="nav-link <?php echo link_checker('create-article.php') ? 'active' : '' ?>" aria-current="<?php echo link_checker('create-article.php') ? 'page' : '' ?>" href="create-article.php">Create Article</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php">View Site</a>
+                            <a class="nav-link <?php echo link_checker('index.php') ? 'active' : '' ?>" aria-current="<?php echo link_checker('index.php') ? 'page' : '' ?>" href="index.php">View Site</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="profile.php">Profile</a>
+                            <a class="nav-link <?php echo link_checker('profile.php') ? 'active' : '' ?>" aria-current="<?php echo link_checker('profile.php') ? 'page' : '' ?>" href="profile.php">Profile</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="logout.php">Logout</a>

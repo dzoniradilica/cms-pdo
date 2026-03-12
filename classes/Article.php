@@ -67,9 +67,10 @@
             return false;
         }
 
-        public function update($title, $content, $image, $created_at) {
-            $query = "UPDATE " .$this->table . " SET title = :title, content = :content, image = :image, created_at = :created_at";
+        public function update($id, $title, $content, $image, $created_at) {
+            $query = "UPDATE " .$this->table . " SET title = :title, content = :content, image = :image, created_at = :created_at WHERE id = :id";
             $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->bindValue(':title', $title);
             $stmt->bindValue(':content', $content);
             $stmt->bindValue(':image', $image);

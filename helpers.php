@@ -75,4 +75,12 @@
             redirect('admin.php');
         }
     }
+
+    function link_checker($path) {
+        if(basename($_SERVER['PHP_SELF']) === $path) {
+            return true;
+        }
+
+        return false;
+    }
 ?>

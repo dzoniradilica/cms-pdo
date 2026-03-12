@@ -42,7 +42,7 @@
                             </td>
                             <td>
                                 <a href="edit-article.php?id=<?php echo htmlspecialchars($articleItem->id); ?>" class="btn btn-sm btn-primary me-1">Edit</a>
-                                <button class="btn btn-sm btn-danger" onclick="confirmDelete(2)">Delete</button>
+                                <a href="delete-article.php" class="btn btn-sm btn-danger" onclick="confirmDelete(2)">Delete</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
