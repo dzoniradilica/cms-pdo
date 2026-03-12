@@ -40,9 +40,12 @@
                             <td>
                                 <?php echo htmlspecialchars(transform_content($articleItem->content)); ?>
                             </td>
-                            <td>
+                            <td style="display: flex;">
                                 <a href="edit-article.php?id=<?php echo htmlspecialchars($articleItem->id); ?>" class="btn btn-sm btn-primary me-1">Edit</a>
-                                <a href="delete-article.php" class="btn btn-sm btn-danger" onclick="confirmDelete(2)">Delete</a>
+                                <form action="delete-article.php" method="post">
+                                    <input type="hidden" name="article_id" value="<?php echo htmlspecialchars($articleItem->id); ?>" >
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
                             </td>
                         </tr>
                     <?php endforeach; ?>

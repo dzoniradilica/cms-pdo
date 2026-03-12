@@ -50,6 +50,18 @@
             return false;
         }
 
+        public function get($id) {
+            $query = "SELECT * FROM " .$this->table . " WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindValue('id', $id, PDO::PARAM_INT);
+
+            if($stmt->execute()) {
+                return $stmt->fetch(PDO::FETCH_OBJ);
+            }
+
+            return false;
+        }
+
         public function getWithAuthor($id, $user_id) {
             $query = 
             "SELECT articles.*, users.username FROM "
@@ -75,6 +87,18 @@
             $stmt->bindValue(':content', $content);
             $stmt->bindValue(':image', $image);
             $stmt->bindValue(':created_at', $created_at);
+
+            if($stmt->execute()) {
+                return true;
+            }
+
+            return false;
+        }
+
+        public function delete($id) {
+            $query = "DELETE FROM " . $this->table . " WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 
             if($stmt->execute()) {
                 return true;
