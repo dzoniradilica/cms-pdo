@@ -2,7 +2,6 @@
     require_once "init.php";
     include base_path("partials/admin/header.php");
     include base_path("partials/admin/nav.php");
-    include base_path("random-articles.php");
 
     if(!$_SESSION['logged_in']) {
         redirect('index.php');
@@ -12,17 +11,15 @@
     $foundUser = $user->get(intval($_SESSION['user_id']));
     $article = new Article();
     $articles = $article->getAllWithAuthor(intval($_SESSION['user_id']));
-
-    var_dump($random_articles)
 ?>
  
     <!-- Main Content -->
     <main class="container my-5">
         <h2 class="mb-4"><?php echo "{$foundUser->username} Welcome to Admin Dashboard" ?></h2>
 
-        <form action="generate-articles" method="post" style="margin-bottom: 20px; display: flex; align-items: center; gap: 20px;">
+        <form action="generate-articles.php" method="post" style="margin-bottom: 20px; display: flex; align-items: center; gap: 20px;">
             <label for="generate_articles">Number of Articlesa</label>
-            <input type="number" min="1" name="generate_articles">
+            <input type="number" min="1" name="generate_articles" required>
             <button type="submit" class="btn btn-sm btn-primary me-1 p-1.5">Generate Articles</button>
         </form>
         <!-- Articles Table -->
